@@ -1,7 +1,5 @@
 package com.ufcg.daca.service;
 
-import java.util.Iterator;
-
 import com.ufcg.daca.model.Aluno;
 
 import exceptions.ObjetoInexistenteException;
@@ -18,8 +16,12 @@ public interface CadastrarAlunoService{
 	
 	String listarAlunos();
 	
-	String getInfoAluno(String matricula, String atributo);
-	
     void salvaDados();
+
+	Aluno getAluno(String email) throws Rep, ObjetoInexistenteException;
+
+	Aluno getAlunoPorMatricula(String matricula) throws Rep, ObjetoInexistenteException;
+
+	String getInfoAluno(String matricula) throws ObjetoInexistenteException;
 
 }

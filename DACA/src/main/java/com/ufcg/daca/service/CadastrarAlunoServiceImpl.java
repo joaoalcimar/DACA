@@ -17,6 +17,10 @@ public class CadastrarAlunoServiceImpl implements CadastrarAlunoService{
 	
     private static List<Aluno> alunos;
     
+    public CadastrarAlunoServiceImpl() {
+    	super();
+    }
+    
     static {
         alunos = populateAlunos();
         carregarDados();
@@ -56,7 +60,8 @@ public class CadastrarAlunoServiceImpl implements CadastrarAlunoService{
     }
 	
     @Override
-	public void cadastrarAluno(String nome, String matricula, int codigoCurso, String telefone, String email) throws ObjetoJaExistenteException{
+	public void cadastrarAluno(String nome, String matricula, int codigoCurso, String telefone, String email)
+			throws ObjetoJaExistenteException{
 		Aluno a = new Aluno(nome,matricula,codigoCurso,telefone,email);
 		
     	if (alunos.contains(a)) {
@@ -83,9 +88,28 @@ public class CadastrarAlunoServiceImpl implements CadastrarAlunoService{
 	}
 	
     @Override
+    public Aluno getAluno(String email) throws Rep, ObjetoInexistenteException{
+		for (int i = 0; i <= alunos.size(); i++) {
+			if (alunos.get(i).getEmail().equals(email)){
+				return alunos.get(i);
+			}
+		}
+        throw new ObjetoInexistenteException("Aluno Inexistente");
+    }
+    
+    @Override
+    public Aluno getAlunoPorMatricula(String matricula) throws Rep, ObjetoInexistenteException{
+		for (int i = 0; i <= alunos.size(); i++) {
+			if (alunos.get(i).getEmail().equals(matricula)){
+				return alunos.get(i);
+			}
+		}
+        throw new ObjetoInexistenteException("Aluno Inexistente");
+    }
+    
+    @Override
 	public String listarAlunos() {
     	String s = "";
-    	// TODO ordenar por nome depois
     	for(int i = 0; i <= alunos.size(); i++){
     		s += alunos.get(i).noTelToString() + "\n";
     	}
@@ -93,9 +117,20 @@ public class CadastrarAlunoServiceImpl implements CadastrarAlunoService{
 	}
 	
     @Override
-	public String getInfoAluno(String matricula, String atributo) {
-    	// TODO nem ideia do que eh essa saida e esse atributo
-		return atributo;
+	public String getInfoAluno(String matricula) throws ObjetoInexistenteException {
+    	String saida = "";
+    	for(int i = 0; i <= alunos.size(); i++) {
+    		if(alunos.get(i).getMatricula().equals(matricula)) {
+    			String nome = alunos.get(i).getNome();
+    			String telefone = alunos.get(i).getTelefone();
+    			String email = alunos.get(i).getEmail();
+    			saida = "O nome do aluno é " + nome + ", o telefone " + telefone
+    					+ " e o email " + email;
+    		}else {
+    			throw new ObjetoInexistenteException("Aluno não cadastrado");
+    		}
+    	}
+		return saida;
 		
     }
 

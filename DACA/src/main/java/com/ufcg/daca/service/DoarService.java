@@ -1,11 +1,13 @@
 package com.ufcg.daca.service;
 
+import exceptions.ObjetoInexistenteException;
+
 public interface DoarService {
 	
-	void doar(String matriculaTutor, int totalCentavos);
+	void doar(String matriculaTutor, int totalCentavos) throws ObjetoInexistenteException;
 	
-	int totalDinheiroTutor(String emailTutor);
+	double totalDinheiroTutor(String emailTutor) throws ObjetoInexistenteException;
 	
-	int totalDinheiroSistema();
+	double totalDinheiroSistema();
 
 }
